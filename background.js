@@ -10,7 +10,6 @@
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (request.startHandling === true) {
-            console.log('Message received');
             startHandling = true;
             sendResponse({submitted: true});
         }
@@ -26,14 +25,13 @@
             return;
         }
 
-        console.log('Handling enabled');
-
         const requestBody = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(details.requestBody.raw[0].bytes))); // todo sophisticate
-        const urlSearchParams = new URLSearchParams(details.url);
+        const url = new URL(details.url);
+        const urlSearchParams = url.searchParams;
         const accessToken = urlSearchParams.get("access_token");
         const version = urlSearchParams.get("v");
         if (requestBody.messageType === "comment") {
-            requestToExecute = "http://api.dev.speakap.nl/networks/0000000000000001/messages/" + requestBody.parent.EID + "/unsubscribe?v=" + version + "&access_token=" + accessToken + "&XDEBUG_SESSION_START=PHPSTORM";
+            requestToExecute = url.protocol + "//" + url.host + url.pathname + requestBody.parent.EID + "/unsubscribe?v=" + version + "&access_token=" + accessToken;
         }
 
         tabStorage[tabId].requests[requestId] = {
