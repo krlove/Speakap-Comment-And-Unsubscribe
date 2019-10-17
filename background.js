@@ -2,7 +2,7 @@
     const tabStorage = {};
     const networkFilters = {
         urls: [
-            "*://*.speakap.nl/*"
+            "*://*.speakap.nl/*", "*://*.speakap.com/*", "*://*.speakap.io/*"
         ]
     };
     let requestToExecute = null;
@@ -41,7 +41,6 @@
             status: 'pending',
             requestBody: requestBody,
         };
-        console.log(tabStorage[tabId].requests[requestId]);
     }, networkFilters, ["requestBody"]);
 
     chrome.webRequest.onCompleted.addListener((details) => {
@@ -81,7 +80,6 @@
             endTime: details.timeStamp,
             status: 'error',
         });
-        //console.log(tabStorage[tabId].requests[requestId]);
     }, networkFilters);
 
     chrome.tabs.onActivated.addListener((tab) => {
@@ -94,6 +92,7 @@
             };
         }
     });
+
     chrome.tabs.onRemoved.addListener((tab) => {
         const tabId = tab.tabId;
         if (!tabStorage.hasOwnProperty(tabId)) {

@@ -5,12 +5,12 @@
   "manifest_version": 2,
   "content_scripts": [
     {
-      "matches": ["*://*.speakap.nl/*", "*://*.speakap.com/*"],
+      "matches": ["*://*.speakap.nl/*", "*://*.speakap.com/*", "*://*.speakap.io/*"],
       "js": ["content.js"]
     }
   ],
   "background": {
     "scripts": ["background.js"]
   },
-  "permissions": ["webRequest", "*://*.speakap.nl/", "*://*.speakap.com", "*://*.speakap.io"]
+  "permissions": ["webRequest", "*://*.speakap.nl/", "*://*.speakap.com/", "*://*.speakap.io/"]
 }
