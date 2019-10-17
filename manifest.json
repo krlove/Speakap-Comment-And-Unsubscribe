@@ -1,0 +1,16 @@
+{
+  "name": "Speakap Comment And Unsubscribe",
+  "version": "1.0",
+  "description": "The way to comment and unsubscribe from the update in a single action",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["http://*.dev.speakap.nl/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": ["webRequest", "*://*.speakap.nl/"]
+}
