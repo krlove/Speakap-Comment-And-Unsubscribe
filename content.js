@@ -4,7 +4,7 @@ document.addEventListener('DOMNodeInserted', function(event) {
     if (target.className === 'ptm js-button-bar') {
         const postButton = target.querySelector('button.action-submit');
         const postAndUnsubscribeButton = postButton.cloneNode(true);
-        postAndUnsubscribeButton.innerHTML = 'Post And Unsubscribe';
+        postAndUnsubscribeButton.innerHTML = 'Post and Unsubscribe';
         postAndUnsubscribeButton.style.width = 'auto';
         postAndUnsubscribeButton.style.marginRight = '2px';
         postAndUnsubscribeButton.onclick = function() {
@@ -17,9 +17,13 @@ document.addEventListener('DOMNodeInserted', function(event) {
         postButton.parentNode.insertBefore(postAndUnsubscribeButton, postButton.nextSibling);
 
         const observer = new MutationObserver(function(mutations) {
-            // todo improve
-            if (mutations[0].attributeName === 'disabled') {
-                postAndUnsubscribeButton.disabled = postButton.disabled;
+            for (let i = 0; i < mutations.length; i++) {
+                const mutation = mutations[i];
+                if (mutation.attributeName === 'disabled') {
+                    postAndUnsubscribeButton.disabled = postButton.disabled;
+
+                    break;
+                }
             }
         });
         observer.observe(postButton, {attributes: true});
