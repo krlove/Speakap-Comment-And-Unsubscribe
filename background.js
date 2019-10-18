@@ -8,6 +8,16 @@
     let requestToExecute = null;
     let startHandling = false;
 
+    function getRequestBody(rawBody) {
+        if (rawBody && rawBody.raw && rawBody.raw.length > 0) {
+            const raw = rawBody.raw[0];
+
+            return JSON.parse(String.fromCharCode.apply(null, new Uint8Array(raw.bytes)));
+        }
+
+        return null;
+    }
+
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (request.startHandling === true) {
             startHandling = true;
@@ -25,12 +35,12 @@
             return;
         }
 
-        const requestBody = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(details.requestBody.raw[0].bytes))); // todo sophisticate
+        const requestBody = getRequestBody(details.requestBody);
         const url = new URL(details.url);
         const urlSearchParams = url.searchParams;
         const accessToken = urlSearchParams.get("access_token");
         const version = urlSearchParams.get("v");
-        if (requestBody.messageType === "comment") {
+        if (requestBody && requestBody.messageType === "comment") {
             requestToExecute = url.protocol + "//" + url.host + url.pathname + requestBody.parent.EID + "/unsubscribe?v=" + version + "&access_token=" + accessToken;
         }
 
@@ -58,7 +68,6 @@
         });
 
         if (requestToExecute !== null) {
-            console.log('Request to be executed: ' + requestToExecute);
             var oReq = new XMLHttpRequest();
             oReq.open("POST", requestToExecute);
             oReq.send();
