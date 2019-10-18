@@ -1,7 +1,7 @@
 # Speakap "Comment and Unsubscribe" Chrome Extension
 
-<img src="https://i.ibb.co/MCx7Ggj/powered-by-badge.png" alt="Speakap" width="30%"/>
-<br /><br />
+<img src="https://i.ibb.co/MCx7Ggj/powered-by-badge.png" alt="Speakap" width="20%"/>
+<br />
 
 The way to post a comment and turn off notifications on the update in a single action
 
